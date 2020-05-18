@@ -73,22 +73,23 @@ class Pet {
         this.ownerId = ownerId;
     }
 
-    static getOwnerById(pet, owners){
-        // Find owner that has id matching ownerId of pet
-        let foundOwner;
-        for (let i = 0; i < owners.length; i++) {
-            const owner = owners[i];
-            if(owner.id === pet.ownerId) {
-                foundOwner = owner;
-                break;
-            }
-        }
-    
-        if(!foundOwner) {
+    static getOwnerById(pet, owners) {
+        // non-anonymous function
+        // function findOwner(owner) {
+        //     return owner.id == pet.ownerId;
+        // }
+        // let foundOwner = owners.find(findOwner);
+
+        // anonymous function
+        let foundOwner = owners.find(function (owner) {
+            return owner.id == pet.ownerId;
+        });
+
+        if (!foundOwner) {
             // Owner was not found
             return "ERROR: Owner not found";
         }
-    
+
         // Call the getFullName method of the owner and return that value
         return foundOwner.getFullName();
     }
@@ -100,8 +101,21 @@ let owners = [
     new Owner("Sally", "Jones", 19)
 ];
 
-let myPet = new Pet("Rex", 4, 15);
+let myPet = new Pet("Rex", 4, 12);
 
 console.log(Pet.getOwnerById(myPet, owners));
 
 // 8 Create a class called Square with a single property, sideLength and create a constructor that assigns that value
+
+class Square {
+    constructor(sideLength) {
+        this.sideLength = sideLength;
+    }
+
+    get area(){
+        return this.sideLength ** 2;
+    }
+}
+
+let sq = new Square(10)
+console.log(sq.area);
